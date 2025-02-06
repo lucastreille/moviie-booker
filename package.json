@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build && cd client && npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "concurrently \"nest start\" \"cd client && set PORT=3001 && npm start\"",
+    "start": "concurrently \"nest start\" \"cd client && npm start\"",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
