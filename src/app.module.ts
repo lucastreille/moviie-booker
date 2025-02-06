@@ -4,6 +4,8 @@ import { UserModule } from './user-controller/user.module';
 import { User } from './user-controller/entities/user.entity';
 import { MoviesModule } from './movies/movies.module';
 import { ConfigModule } from '@nestjs/config';
+import { ReservationModule } from './reservation/reservation.module';
+import { Reservation } from './reservation/entities/reservation.entity';
 
 
 @Module({
@@ -18,11 +20,12 @@ import { ConfigModule } from '@nestjs/config';
       username: 'riviart_moviiebo',
       password: 'cfJWzZVsUA2@*YQ',
       database: 'riviart_moviiebooker',
-      entities: [User],
+      entities: [User, Reservation],
       synchronize: true,
     }),
     UserModule,
     MoviesModule,
+    ReservationModule,
   ],
 })
 export class AppModule {}
