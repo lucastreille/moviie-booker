@@ -25,7 +25,8 @@ En raison de l'utilisation de la version gratuite de Render pour l'hébergement 
 - Une fois démarré, l'API fonctionne normalement
 
 ## Documentation de l'API
-- URL vers la documentation : https://moviie-booker.onrender.com/api-docs
+
+URL vers la documentation : https://moviie-booker.onrender.com/api-docs
 
 ### Authentification
 
