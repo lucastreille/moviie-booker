@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user-controller/user.module';
 import { User } from './user-controller/entities/user.entity';
 import { MoviesModule } from './movies/movies.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService  } from '@nestjs/config';
 import { ReservationModule } from './reservation/reservation.module';
 import { Reservation } from './reservation/entities/reservation.entity';
 
@@ -13,15 +13,18 @@ import { Reservation } from './reservation/entities/reservation.entity';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'mysql-riviart.alwaysdata.net',
-      port: 3306,
-      username: 'riviart_moviiebo',
-      password: 'cfJWzZVsUA2@*YQ',
-      database: 'riviart_moviiebooker',
-      entities: [User, Reservation],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        entities: [User, Reservation],
+        synchronize: true,
+      }),
     }),
     UserModule,
     MoviesModule,

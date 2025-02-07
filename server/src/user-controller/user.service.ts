@@ -37,11 +37,11 @@ export class UserService {
 
             const { password, ...result } = savedUser;
             return {
-                message: 'User registered successfully',
+                message: 'Utilisateur enregistré avec succès',
                 user: result
             };
         } catch (error) {
-            console.error('Erreur dans register:', error);  
+            console.error('Erreur dans l\'enregsitrement:', error);  
             throw error;
         }
     }
@@ -57,12 +57,12 @@ export class UserService {
         });
 
         if (!user) {
-            throw new UnauthorizedException('Invalid credentials');
+            throw new UnauthorizedException('TOken Invalide');
         }
 
         const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
         if (!isPasswordValid) {
-            throw new UnauthorizedException('Invalid credentials');
+            throw new UnauthorizedException('TOken Invalide');
         }
 
         const payload = { email: user.email, sub: user.id };

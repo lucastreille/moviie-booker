@@ -15,8 +15,9 @@ export class ReservationService {
     ) {}
 
     async create(createReservationDto: CreateReservationDto, userId: number) {
+        
+        
         try {
-
 
             const reservationDate = new Date(createReservationDto.dateReservation);
             reservationDate.setHours(reservationDate.getHours() - 1);
@@ -34,12 +35,11 @@ export class ReservationService {
             if (existingReservations.length > 0) {
                 const conflictingReservation = existingReservations[0];
                 const endTime = new Date(conflictingReservation.dateReservation.getTime() + 2 * 60 * 60 * 1000);
+                
                 throw new ConflictException(
-                    `Vous avez déjà une réservation active de ${
-                        conflictingReservation.dateReservation.toLocaleTimeString()
-                    } à ${endTime.toLocaleTimeString()}. 
-                    Veuillez attendre la fin de cette séance.`
+                    `Vous avez déjà une réservation active de ${conflictingReservation.dateReservation.toLocaleTimeString()} à ${endTime.toLocaleTimeString()}. Veuillez réserver une séance où vous êtes disponibles.`
                 );
+
             }
 
             const reservation = this.reservationRepository.create({
@@ -53,12 +53,14 @@ export class ReservationService {
             const endTime = new Date(reservationDate.getTime() + 2 * 60 * 60 * 1000);
 
             return {
+
                 message: 'Réservation créée avec succès',
                 reservation: {
                     ...savedReservation,
                     heureDebut: reservationDate.toLocaleTimeString(),
                     heureFin: endTime.toLocaleTimeString()
                 }
+
             };
 
 
@@ -71,9 +73,11 @@ export class ReservationService {
         }
 
         
+
     }
 
     async findAllByUser(userId: number) {
+
         try {
             return await this.reservationRepository.find({
                 where: { userId: userId }
@@ -82,10 +86,14 @@ export class ReservationService {
             console.error('Erreur dans findAllByUser:', error);
             throw error;
         }
+
     }
 
+    
     async remove(id: number, userId: number) {
+
         try {
+            
             const reservation = await this.reservationRepository.findOne({
                 where: { id: id, userId: userId }
             });
@@ -98,9 +106,12 @@ export class ReservationService {
             return {
                 message: 'Réservation supprimée avec succès'
             };
+            
         } catch (error) {
             console.error('Erreur dans remove reservation:', error);
             throw error;
         }
+
     }
+
 }

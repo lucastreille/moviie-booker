@@ -9,6 +9,7 @@ export class MoviesController {
 
     constructor(private readonly moviesService: MoviesService) {}
 
+
     @Get()
     @ApiOperation({ summary: 'Récupérer les films avec options de recherche et de tri' })
     @ApiResponse({ 
@@ -29,4 +30,7 @@ export class MoviesController {
 
         return this.moviesService.getMovies(parsedQuery);
     }
+
+
+    
 }

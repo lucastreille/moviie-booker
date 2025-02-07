@@ -57,7 +57,7 @@ export class ReservationController {
         status: 404, 
         description: 'Réservation non trouvée' 
     })
-    @ApiBearerAuth() // Nécessite une authentification via le JWT
+    @ApiBearerAuth()
     async remove(@Param('id') id: number, @Request() req) {
         return await this.reservationService.remove(id, req.user.userId);
     }

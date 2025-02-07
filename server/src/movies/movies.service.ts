@@ -20,7 +20,7 @@ export class MoviesService {
     const apiKey = this.configService.get<string>('TMDB_API_KEY');
 
     if (!apiUrl || !apiKey) {
-      throw new Error('TMDB_API_URL et TMDB_API_KEY doivent être définis');
+      throw new Error('TMDB_API_URL et TMDB_API_KEY check de la définitions.');
     }
 
     this.apiUrl = apiUrl;
