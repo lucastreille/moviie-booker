@@ -15,9 +15,10 @@ describe('Application (e2e)', () => {
       imports: [
         TypeOrmModule.forRoot({
           type: 'sqlite',
-          database: ':memory:',
+          database: './test/test.sqlite', 
           entities: [User, Reservation],
           synchronize: true,
+          dropSchema: true 
         }),
         AppModule,
       ],
@@ -25,7 +26,7 @@ describe('Application (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
-  });
+});
 
   describe('Authentication Flow', () => {
     const testUser = {
@@ -42,7 +43,7 @@ describe('Application (e2e)', () => {
 
       expect(response.body.user).toBeDefined();
       expect(response.body.user.email).toBe(testUser.email);
-      expect(response.body.message).toBe('User registered successfully');
+      expect(response.body.message).toBe('Utilisateur enregistré avec succès'); 
     });
 
     it('/auth/login (POST) - should login and return token', async () => {
@@ -52,13 +53,14 @@ describe('Application (e2e)', () => {
           email: testUser.email,
           password: testUser.password,
         })
-        .expect(200);
+        .expect(201);
 
-      expect(response.body.access_token).toBeDefined();
+      console.log('Token reçu:', response.body.access_token);
       authToken = response.body.access_token;
     });
 
     it('/profile (GET) - should get user profile', async () => {
+      expect(authToken).toBeDefined(); 
       const response = await request(app.getHttpServer())
         .get('/user-controller/profile')
         .set('Authorization', `Bearer ${authToken}`)
@@ -81,7 +83,7 @@ describe('Application (e2e)', () => {
         .send(reservation)
         .expect(201);
 
-      expect(response.body.message).toBe('Réservation créée avec succès');
+      expect(response.body.message).toBe('Réservation créée avec succès'); 
       expect(response.body.reservation).toBeDefined();
     });
 
@@ -95,19 +97,24 @@ describe('Application (e2e)', () => {
     });
 
     it('/reservations/:id (DELETE) - should delete a reservation', async () => {
+
       const createResponse = await request(app.getHttpServer())
         .post('/reservations')
         .set('Authorization', `Bearer ${authToken}`)
         .send({
           seanceId: 2,
-          dateReservation: new Date(Date.now() + 172800000).toISOString() 
+          dateReservation: new Date(Date.now() + 172800000).toISOString()
         });
-
+    
+      expect(createResponse.body.reservation).toBeDefined();
+      expect(createResponse.body.reservation.id).toBeDefined();
+    
       await request(app.getHttpServer())
         .delete(`/reservations/${createResponse.body.reservation.id}`)
         .set('Authorization', `Bearer ${authToken}`)
         .expect(200);
-    });
+      });
+
   });
 
   describe('Movies Flow', () => {
@@ -133,5 +140,11 @@ describe('Application (e2e)', () => {
 
   afterAll(async () => {
     await app.close();
+
+    const fs = require('fs');
+    if (fs.existsSync('./test/test.sqlite')) {
+        fs.unlinkSync('./test/test.sqlite');
+    }
+
   });
 });

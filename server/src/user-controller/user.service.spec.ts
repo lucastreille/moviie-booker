@@ -85,7 +85,7 @@ describe('UserService', () => {
       });
       expect(mockRepository.save).toHaveBeenCalledWith(savedUser);
       expect(result).toEqual({
-        message: 'User registered successfully',
+        message: 'Utilisateur enregistré avec succès',
         user: {
           id: savedUser.id,
           email: savedUser.email,
