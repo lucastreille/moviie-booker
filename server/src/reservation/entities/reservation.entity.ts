@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn  } from 'typeorm';
-import { User } from './../../user-controller/entities/user.entity';
+import { User } from '../../user-controller/entities/user.entity';
 
 
 @Entity('reservation')

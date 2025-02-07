@@ -83,11 +83,10 @@ const MoviesSearchPagination = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Utiliser un debounce pour éviter trop d'appels API rapprochés
   useEffect(() => {
     const timer = setTimeout(() => {
       onSearch(searchTerm);
-    }, 300); // Délai de 300ms entre chaque frappe
+    }, 300); 
 
     return () => clearTimeout(timer);
   }, [searchTerm]);

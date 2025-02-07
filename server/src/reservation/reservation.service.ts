@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { Reservation } from './entities/reservation.entity';
 import { CreateReservationDto } from './dto/create-reservation.dto';
-import { User } from './../user-controller/entities/user.entity';
+import { User } from '../user-controller/entities/user.entity';
 
 
 
