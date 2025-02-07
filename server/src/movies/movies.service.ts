@@ -4,11 +4,15 @@ import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 import { MovieQueryDto } from './dto/movie-query.dto';
 
+
+
 @Injectable()
 export class MoviesService {
    
   private readonly apiUrl: string;
   private readonly apiKey: string;
+
+
 
   constructor( private readonly httpService: HttpService, private readonly configService: ConfigService,) 
   {
@@ -22,6 +26,9 @@ export class MoviesService {
     this.apiUrl = apiUrl;
     this.apiKey = apiKey;
   }
+
+
+
 
   async getMovies(query: MovieQueryDto) {
     
@@ -46,6 +53,8 @@ export class MoviesService {
 
     }
 
+
+
     const response = await firstValueFrom(
       this.httpService.get(`${this.apiUrl}/discover/movie`, {
         params: {
@@ -56,6 +65,7 @@ export class MoviesService {
     );
     
     return response.data;
+
 
   }
 
