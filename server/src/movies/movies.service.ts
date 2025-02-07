@@ -6,16 +6,12 @@ import { MovieQueryDto } from './dto/movie-query.dto';
 
 @Injectable()
 export class MoviesService {
-
-
+   
   private readonly apiUrl: string;
   private readonly apiKey: string;
 
-
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly configService: ConfigService,
-  ) {
+  constructor( private readonly httpService: HttpService, private readonly configService: ConfigService,) 
+  {
     const apiUrl = this.configService.get<string>('TMDB_API_URL');
     const apiKey = this.configService.get<string>('TMDB_API_KEY');
 
@@ -27,10 +23,7 @@ export class MoviesService {
     this.apiKey = apiKey;
   }
 
-
-
   async getMovies(query: MovieQueryDto) {
-    
     
     const params = {
       api_key: this.apiKey,
@@ -38,8 +31,8 @@ export class MoviesService {
       language: 'fr-FR',
     };
 
-    
     if (query.search) {
+      
       const response = await firstValueFrom(
         this.httpService.get(`${this.apiUrl}/search/movie`, {
           params: {
@@ -48,21 +41,22 @@ export class MoviesService {
           },
         }),
       );
+
       return response.data;
+
     }
 
     const response = await firstValueFrom(
       this.httpService.get(`${this.apiUrl}/discover/movie`, {
         params: {
           ...params,
-          sort_by: query.sort || 'popularity.desc',
+          sort_by: 'popularity.desc',
         },
       }),
     );
+    
     return response.data;
 
-
   }
-
 
 }
