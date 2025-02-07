@@ -14,7 +14,7 @@ Ce projet est divisé en deux parties principales :
 - Hébergement : alwaysdata
 
 ### Back-end (API)
-- URL de base de l'API : http://localhost:3000/api
+- URL de base de l'API : https://moviie-booker.onrender.com
 - Hébergement : Render
 
 ## ⚠️ Note Importante sur l'API
