@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://moviie-booker-1.onrender.com/api',  // https://moviie-booker-1.onrender.com/api en ligne OUs /api si en local
   headers: {
     'Content-Type': 'application/json',
   },
